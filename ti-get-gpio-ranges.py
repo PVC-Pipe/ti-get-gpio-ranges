@@ -3,12 +3,12 @@ from re import search
 
 def get_gpio_ranges(filename: str) -> None:
     with open(filename, "r", newline="") as file:
-        range_strings = {}
+        range_strings: dict[str, str] = {}
 
-        num_pins = 0
-        prev_offset = -2
-        in_iopad = False
-        pmx_name = ""
+        num_pins: int = 0
+        prev_offset: int = -2
+        in_iopad: bool = False
+        pmx_name: str = ""
 
         for line in file:
             line = line.lower()
