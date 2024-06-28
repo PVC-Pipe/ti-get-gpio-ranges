@@ -1,4 +1,5 @@
 from argparse import ArgumentParser
+from re import search
 
 def get_gpio_ranges(filename: str) -> None:
     with open(filename, "r", newline="") as file:
@@ -6,18 +7,21 @@ def get_gpio_ranges(filename: str) -> None:
 
         num_pins = 0
         prev_offset = -2
-        in_pmx = False
+        in_iopad = False
+        pmx_name = ""
 
         for line in file:
-            if "IOPAD" in line:
-                domain = "mcu" if "MCU_IOPAD" in line else "main"
+            if search("&.*_pmx.* {", line):
+                pmx_name = line.strip().strip("&").strip("{").strip()
+
+            elif "IOPAD" in line:
+                domain = pmx_name.split("_")[0]
                 gpio_info = line[line.index("GPIO") + len("GPIO"):line.index("*/") - 1].split("_")
                 domain_num = int(gpio_info[0])
                 gpio_num = int(gpio_info[1])
                 offset = int(int(line[line.index("(") + len("("):line.index(",")], 16) / 4)
 
                 domain_name = f"{domain}_gpio{domain_num}"
-                pmx_name = f"{domain}_pmx0"
 
                 if offset > (prev_offset + 1):
                     if range_strings.get(domain_name) != None:
@@ -30,13 +34,13 @@ def get_gpio_ranges(filename: str) -> None:
 
                 num_pins += 1
                 prev_offset = offset
-                in_pmx = True
+                in_iopad = True
 
-            elif in_pmx:
+            elif in_iopad:
                 range_strings[domain_name] += f" {num_pins}>;\n"
                 num_pins = 0
                 prev_offset = -2
-                in_pmx = False
+                in_iopad = False
 
         for domain_name, range_string in sorted(range_strings.items()):
             print(f"# {domain_name}")
