@@ -1,7 +1,6 @@
 Execution for the j722s_tda4ven_tda4aen_am67:
 
 ```
-$ python3 ti-get-gpio-ranges.py devicetree.dtsi
 # main_gpio0
 <&main_pmx0 0 0 32>,
 <&main_pmx0 32 33 38>,

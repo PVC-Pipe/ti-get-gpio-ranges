@@ -1,7 +1,6 @@
 Execution for the j721e_dra829_tda4vm_am752x:
 
 ```
-python3 ti-get-gpio-ranges.py ./devices/j721e_dra829_tda4vm_am752x/devicetree.dtsi
 # main_gpio0
 <&main_pmx0 0 0 18>,
 <&main_pmx0 18 19 110>;
