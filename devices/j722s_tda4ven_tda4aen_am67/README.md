@@ -1,4 +1,4 @@
-Example execution for the J722S:
+Execution for the j722s_tda4ven_tda4aen_am67:
 
 ```
 $ python3 ti-get-gpio-ranges.py devicetree.dtsi
