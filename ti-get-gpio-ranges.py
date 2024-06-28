@@ -15,8 +15,9 @@ def get_gpio_ranges(filename: str) -> None:
                 pmx_name = line.strip().strip("&").strip("{").strip()
 
             elif "IOPAD" in line:
+                line = line.lower()
                 domain = pmx_name.split("_")[0]
-                gpio_info = line[line.index("GPIO") + len("GPIO"):line.index("*/") - 1].split("_")
+                gpio_info = line[line.index("gpio") + len("gpio"):line.index("*/") - 1].split("_")
                 domain_num = int(gpio_info[0])
                 gpio_num = int(gpio_info[1])
                 offset = int(int(line[line.index("(") + len("("):line.index(",")], 16) / 4)
