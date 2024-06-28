@@ -11,11 +11,11 @@ def get_gpio_ranges(filename: str) -> None:
         pmx_name = ""
 
         for line in file:
+            line = line.lower()
             if search("&.*_pmx.* {", line):
                 pmx_name = line.strip().strip("&").strip("{").strip()
 
-            elif "IOPAD" in line:
-                line = line.lower()
+            elif "iopad" in line:
                 domain = pmx_name.split("_")[0]
                 gpio_info = line[line.index("gpio") + len("gpio"):line.index("*/") - 1].split("_")
                 domain_num = int(gpio_info[0])
