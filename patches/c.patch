@@ -1,0 +1,34 @@
+From c3d3ede73f74c149ceb32da4dbb129a05a1c7fc5 Mon Sep 17 00:00:00 2001
+From: Jared McArthur <j-mcarthur@ti.com>
+Date: Mon, 29 Jul 2024 10:48:50 -0500
+Subject: [PATCH] arm64: dts: ti: k3-j722s: Fix gpio-range for main_pmx0
+
+Commit 5e5c50964e2e ("arm64: dts: ti: k3-j722s: Add gpio-ranges
+properties") introduced pinmux range definition for gpio-ranges, however
+missed a hole within gpio-range for main_pmx0. As a result, automatic
+mapping of GPIO to pin control for gpios within the main_pmx0 domain is
+broken. Fix this by correcting the gpio-range.
+
+Fixes: 5e5c50964e2e ("arm64: dts: ti: k3-j722s: Add gpio-ranges properties")
+Signed-off-by: Jared McArthur <j-mcarthur@ti.com>
+---
+ arch/arm64/boot/dts/ti/k3-j722s-main.dtsi | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/ti/k3-j722s-main.dtsi b/arch/arm64/boot/dts/ti/k3-j722s-main.dtsi
+index c797980528ec..dde4bd5c6645 100644
+--- a/arch/arm64/boot/dts/ti/k3-j722s-main.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-j722s-main.dtsi
+@@ -193,7 +193,8 @@ &inta_main_dmss {
+ &main_pmx0 {
+ 	pinctrl-single,gpio-range =
+ 		<&main_pmx0_range 0 32 PIN_GPIO_RANGE_IOPAD>,
+-		<&main_pmx0_range 33 55 PIN_GPIO_RANGE_IOPAD>,
++		<&main_pmx0_range 33 38 PIN_GPIO_RANGE_IOPAD>,
++		<&main_pmx0_range 72 17 PIN_GPIO_RANGE_IOPAD>,
+ 		<&main_pmx0_range 101 25 PIN_GPIO_RANGE_IOPAD>,
+ 		<&main_pmx0_range 137 5 PIN_GPIO_RANGE_IOPAD>,
+ 		<&main_pmx0_range 143 3 PIN_GPIO_RANGE_IOPAD>,
+-- 
+2.34.1
+
