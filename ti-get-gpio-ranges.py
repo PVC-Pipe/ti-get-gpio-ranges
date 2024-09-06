@@ -24,7 +24,7 @@ def get_gpio_ranges(filename: str) -> None:
 
                 domain_name = f"{domain}_gpio{domain_num}"
 
-                if offset > (prev_offset + 1):
+                if offset > (prev_offset + 1) or offset < prev_offset:
                     if range_strings.get(domain_name) != None:
                         range_strings[domain_name] += f" {num_pins}>,\n"
                         num_pins = 0
